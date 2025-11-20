@@ -18,30 +18,27 @@ RUN npm run build
 # Production stage - Nginx
 FROM nginx:alpine
 
+# Remove default nginx config
+RUN rm /etc/nginx/conf.d/default.conf
+
 # Copy built files from builder stage
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Copy custom nginx configuration
+# Configure Nginx
 RUN echo 'server { \
     listen 5901; \
     server_name _; \
     root /usr/share/nginx/html; \
     index index.html; \
+    include /etc/nginx/mime.types; \
+    location ~* \.js$ { \
+        add_header Content-Type "application/javascript; charset=utf-8"; \
+    } \
     location / { \
         try_files $uri $uri/ /index.html; \
-    } \
-    location /health { \
-        access_log off; \
-        return 200 "OK"; \
-        add_header Content-Type text/plain; \
-    } \
-    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ { \
-        expires 1y; \
-        add_header Cache-Control "public, immutable"; \
     } \
 }' > /etc/nginx/conf.d/default.conf
 
 EXPOSE 5901
 
 CMD ["nginx", "-g", "daemon off;"]
-
