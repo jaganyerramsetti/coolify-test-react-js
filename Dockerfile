@@ -35,6 +35,10 @@ RUN echo 'server { \
         return 200 "OK"; \
         add_header Content-Type text/plain; \
     } \
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ { \
+        expires 1y; \
+        add_header Cache-Control "public, immutable"; \
+    } \
 }' > /etc/nginx/conf.d/default.conf
 
 EXPOSE 5901
