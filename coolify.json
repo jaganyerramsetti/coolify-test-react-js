@@ -1,0 +1,10 @@
+{
+    "build_pack": "dockerfile",
+    "base_directory": "/react-app",
+    "publish_directory": "/",
+    "ports_exposes": "5901",
+    "settings": {
+        "is_static": true
+    }
+}
+
