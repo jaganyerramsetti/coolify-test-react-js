@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm ci
+RUN npm install
 
 # Copy source files
 COPY . .
@@ -15,30 +15,22 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Production stage - Nginx
-FROM nginx:alpine
+# Production stage
+FROM node:18-alpine
 
-# Remove default nginx config
-RUN rm /etc/nginx/conf.d/default.conf
+WORKDIR /app
+
+# Install serve to serve static files
+RUN npm install -g serve
 
 # Copy built files from builder stage
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/dist ./dist
 
-# Configure Nginx
-RUN echo 'server { \
-    listen 5901; \
-    server_name _; \
-    root /usr/share/nginx/html; \
-    index index.html; \
-    include /etc/nginx/mime.types; \
-    location ~* \.js$ { \
-        add_header Content-Type "application/javascript; charset=utf-8"; \
-    } \
-    location / { \
-        try_files $uri $uri/ /index.html; \
-    } \
-}' > /etc/nginx/conf.d/default.conf
-
+# Expose the port
 EXPOSE 5901
 
-CMD ["nginx", "-g", "daemon off;"]
+# Set environment variable for port
+ENV PORT=5901
+
+# Start the application
+CMD ["serve", "-s", "dist", "-l", "5901"]
