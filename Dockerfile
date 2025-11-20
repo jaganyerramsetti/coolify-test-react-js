@@ -27,10 +27,10 @@ RUN npm install -g serve
 COPY --from=builder /app/dist ./dist
 
 # Expose the port
-EXPOSE 5901
+EXPOSE 3000
 
 # Set environment variable for port
-ENV PORT=5901
+ENV PORT=3000
 
 # Start the application
-CMD ["serve", "-s", "dist", "-l", "5901"]
+CMD ["serve", "-s", "dist", "-l", "3000"]
