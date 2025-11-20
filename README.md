@@ -83,7 +83,8 @@ This application is configured for easy deployment on Coolify using Docker.
 - A public Git repository (GitHub, GitLab, etc.)
 
 ### Deployment Steps
-
+ 
+ 
 1. **Push to Repository**: Ensure your code is pushed to a public Git repository
 
 2. **Add Application in Coolify**:
