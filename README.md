@@ -90,13 +90,13 @@ This application is configured for easy deployment on Coolify using Docker.
    - Go to your Coolify dashboard
    - Click "New Resource" → "Application"
    - Select your Git repository
-   - Choose base directory: `/react-app`
    - Coolify will automatically detect the `coolify.json` configuration
+   - No need to set base directory (it's already configured as root `/`)
 
 3. **Configuration**:
    - The `coolify.json` file is already configured with:
      - Build pack: `dockerfile` (uses the Dockerfile)
-     - Base directory: `/react-app`
+     - Base directory: `/` (root of repository)
      - Exposed port: `5901`
      - Static site: `true`
 
@@ -115,7 +115,7 @@ This application is configured for easy deployment on Coolify using Docker.
 ## Project Structure
 
 ```
-react-app/
+.
 ├── public/          # Static assets
 ├── src/
 │   ├── App.jsx      # Main application component
@@ -137,13 +137,9 @@ react-app/
 - **Nginx** - Web server for static files
 - **Docker** - Containerization for deployment
 
-## Differences from Next.js App
+## Standalone Repository
 
-- **Build Tool**: Uses Vite instead of Next.js
-- **Design**: Purple gradient theme vs. different color scheme
-- **Architecture**: Client-side only (SPA) vs. Server-side rendering
-- **Styling**: Custom CSS with gradients vs. Tailwind CSS
-- **Deployment**: Static files served by Nginx vs. Node.js server
+This is a standalone React application repository, ready for deployment on Coolify. All configuration files are set up for root-level deployment.
 
 ## License
 

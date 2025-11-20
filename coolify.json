@@ -1,6 +1,6 @@
 {
     "build_pack": "dockerfile",
-    "base_directory": "/react-app",
+    "base_directory": "/",
     "publish_directory": "/",
     "ports_exposes": "5901",
     "settings": {
